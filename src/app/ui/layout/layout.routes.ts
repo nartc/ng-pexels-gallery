@@ -14,7 +14,10 @@ const layoutRoutes: Route[] = [
   },
   {
     path: 'random',
-    providers: [provideComponentStore(PaginationStore), providePhotosStore()],
+    providers: [
+      provideComponentStore(PaginationStore),
+      providePhotosStore('christmas'),
+    ],
     loadComponent: () => import('../../random/random.component'),
   },
 ];
