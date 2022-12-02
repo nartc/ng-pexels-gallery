@@ -18,7 +18,7 @@ import { injectPaginationStore } from '../pagination/pagination.store';
 import { Photo } from '../pexels/pexels.model';
 import { injectPexelsService } from '../pexels/pexels.service';
 
-const PHOTOS_DEFAULT_QUERY = new InjectionToken<string>('Default Query');
+export const PHOTOS_DEFAULT_QUERY = new InjectionToken<string>('Default Query');
 
 @Injectable()
 export class PhotosStore
@@ -83,6 +83,10 @@ export function providePhotosStore(defaultQuery = '') {
     provideComponentStore(PhotosStore),
     { provide: PHOTOS_DEFAULT_QUERY, useValue: defaultQuery },
   ];
+}
+
+export function injectPhotosDefaultQuery() {
+  return inject(PHOTOS_DEFAULT_QUERY);
 }
 
 export function injectPhotosStore() {

@@ -1,8 +1,11 @@
 import { NgFor } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { PushModule } from '@ngrx/component';
-import { injectPhotosStore } from '../shared/data-access/photos/photos.store';
+import {
+  injectPhotosDefaultQuery,
+  injectPhotosStore,
+} from '../shared/data-access/photos/photos.store';
 import { PaginatorComponent } from '../ui/paginator/paginator.component';
 import { PhotoCardComponent } from '../ui/photo-card/photo-card.component';
 import { SearchComponent } from './ui/search/search.component';
@@ -12,8 +15,11 @@ import { SearchComponent } from './ui/search/search.component';
   standalone: true,
   template: `
     <app-paginator></app-paginator>
-    <app-search (query)="photosStore.setQuery($event)"></app-search>
-    <div class="photos-container">
+    <app-search
+      [defaultQuery]="defaultQuery"
+      (query)="photosStore.setQuery($event)"
+    ></app-search>
+    <div class="photos-grid">
       <app-photo-card
         *ngFor="let photo of photosStore.photos$ | ngrxPush"
         [photo]="photo"
@@ -29,8 +35,9 @@ import { SearchComponent } from './ui/search/search.component';
     PaginatorComponent,
     SearchComponent,
   ],
-  styleUrls: ['./home.component.scss'],
 })
 export default class HomeComponent {
+  @HostBinding('class.photos-container') readonly hostClass = true;
+  readonly defaultQuery = injectPhotosDefaultQuery();
   readonly photosStore = injectPhotosStore();
 }
