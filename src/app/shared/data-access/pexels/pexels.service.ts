@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { injectAppConfig } from '../config/config.di';
+import { injectAppConfig } from '../../config/config.di';
 import { PhotoPagination } from './pexels.model';
 
 @Injectable({ providedIn: 'root' })

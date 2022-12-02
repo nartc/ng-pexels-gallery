@@ -33,8 +33,8 @@ export class AppComponent {
     req,
     next
   ) => {
-    const { pexelsApiKey } = injectAppConfig();
-    if (!pexelsApiKey) return next(req);
-    return next(req.clone({ setHeaders: { Authorization: pexelsApiKey } }));
+    const { pexels } = injectAppConfig();
+    if (!pexels || !pexels.apiKey) return next(req);
+    return next(req.clone({ setHeaders: { Authorization: pexels.apiKey } }));
   };
 }

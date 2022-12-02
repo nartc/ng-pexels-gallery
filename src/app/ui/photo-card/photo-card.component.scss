@@ -1,0 +1,29 @@
+:host {
+  position: relative;
+
+  & mat-card {
+    width: 500px;
+
+    & .example-header-image {
+      background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+      background-size: cover;
+    }
+
+    & mat-card-header {
+      padding: 1rem;
+    }
+
+    & mat-card-actions {
+      padding: 1rem;
+    }
+
+    & mat-card-content {
+      position: relative;
+      height: 400px;
+    }
+
+    & [mat-card-image] {
+      object-fit: cover;
+    }
+  }
+}

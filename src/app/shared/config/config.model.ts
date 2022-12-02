@@ -1,4 +1,7 @@
 export interface AppConfig {
-  pexelsApiKey: string;
+  pexels: {
+    apiKey: string;
+    pageSize: number;
+  };
   baseUrl: string;
 }
