@@ -1,4 +1,4 @@
-import { inject, Injectable, InjectionToken } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   ComponentStore,
   OnStateInit,
@@ -14,11 +14,13 @@ import {
   tap,
   withLatestFrom,
 } from 'rxjs';
+import { createInjectionToken } from '../../utils/di';
 import { injectPaginationStore } from '../pagination/pagination.store';
 import { Photo } from '../pexels/pexels.model';
 import { injectPexelsService } from '../pexels/pexels.service';
 
-export const PHOTOS_DEFAULT_QUERY = new InjectionToken<string>('Default Query');
+export const [injectPhotosDefaultQuery, providePhotosDefaultQuery] =
+  createInjectionToken<string>('Default Query');
 
 @Injectable()
 export class PhotosStore
@@ -27,7 +29,7 @@ export class PhotosStore
 {
   private readonly pexelsService = injectPexelsService();
   private readonly paginationStore = injectPaginationStore();
-  private readonly defaultQuery = inject(PHOTOS_DEFAULT_QUERY);
+  private readonly defaultQuery = injectPhotosDefaultQuery();
 
   readonly photos$ = this.select((s) => s.photos, { debounce: true });
 
@@ -81,12 +83,8 @@ export class PhotosStore
 export function providePhotosStore(defaultQuery = '') {
   return [
     provideComponentStore(PhotosStore),
-    { provide: PHOTOS_DEFAULT_QUERY, useValue: defaultQuery },
+    providePhotosDefaultQuery(defaultQuery),
   ];
-}
-
-export function injectPhotosDefaultQuery() {
-  return inject(PHOTOS_DEFAULT_QUERY);
 }
 
 export function injectPhotosStore() {
