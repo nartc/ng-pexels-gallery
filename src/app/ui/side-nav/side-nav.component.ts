@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-side-nav',
@@ -8,10 +8,28 @@ import { RouterLink } from '@angular/router';
   template: `
     <mat-nav-list>
       <mat-list-item><b>Image Gallery</b></mat-list-item>
-      <a mat-list-item routerLink="/">Home</a>
-      <a mat-list-item routerLink="/random">Random Photos</a>
+      <a
+        mat-list-item
+        routerLink="/"
+        #homeRla="routerLinkActive"
+        routerLinkActive
+        [routerLinkActiveOptions]="{ exact: true }"
+        [activated]="homeRla.isActive"
+      >
+        Home
+      </a>
+      <a
+        mat-list-item
+        routerLink="/random"
+        #randomRla="routerLinkActive"
+        routerLinkActive
+        [routerLinkActiveOptions]="{ exact: true }"
+        [activated]="randomRla.isActive"
+      >
+        Random Photos
+      </a>
     </mat-nav-list>
   `,
-  imports: [MatListModule, RouterLink],
+  imports: [MatListModule, RouterLink, RouterLinkActive],
 })
 export class SideNavComponent {}
